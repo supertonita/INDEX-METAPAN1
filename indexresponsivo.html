@@ -49,6 +49,12 @@
     max-width:calc(100% - 24px);
     border-radius:8px;
   }
+  @media (max-width: 480px) {
+  .category-list[aria-hidden="true"] {
+    display: none !important;
+  }
+}
+
 }
 
   .category-btn { background:#fff; border:1px solid #ddd; padding:8px 12px; border-radius:30px; cursor:pointer; font-size:13px; text-align:left; }
