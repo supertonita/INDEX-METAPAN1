@@ -5,209 +5,539 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>MINI SUPER TOÑITA</title>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&display=swap" rel="stylesheet">
+
 <style>
-  /* =========================
-     ESTILOS BASE (fondo blanco)
-     ========================= */
-  :root {
-    --green: #25d366;
-    --muted: #efefef;
-    --accent: #007bff;
-  }
-
-  * { box-sizing: border-box; font-family: 'Montserrat', sans-serif; }
-  body { margin: 0; padding: 0; background: #fff; color: #111; -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale; }
-
-  /* Banner */
-  .banner { width: 100%; display:flex; justify-content:center; margin:10px 0; }
-  .banner-img { width: 50%; max-width: 800px; border-radius: 12px; object-fit: cover; box-shadow: 0 4px 12px rgba(0,0,0,0.12); }
-
-  /* Controls (sucursal, entrega, buscador) */
-  .controls { max-width:1200px; margin: 6px auto; padding: 8px; display:flex; gap:12px; align-items:center; justify-content:center; flex-wrap:wrap; }
-  .controls > div { display:flex; gap:6px; align-items:center; }
-  .controls label { font-weight:500; }
-  select, input[type="text"] { padding:8px 10px; border-radius:8px; border:1px solid #ccc; font-size:14px; }
-
-  /* Info domicilio (oculto por defecto) */
-  #info-domicilio { display:none; text-align:center; margin: 8px auto; max-width:360px; }
-  #info-domicilio input { width:90%; padding:8px; margin:6px auto; border-radius:8px; border:1px solid #ccc; display:block; }
-
-  /* Botón categorías */
-  .categories-btn { position: fixed; top: 18px; left: 18px; z-index: 10010; background:#fff; border:1px solid #9f9f9f; border-radius:60px; padding:10px 18px; cursor:pointer; box-shadow:0 2px 6px rgba(0,0,0,0.12); font-size:13px; }
-  .categories-btn:hover { background: #f3f3f3; }
-
-  /* === Corrección pantalla blanca en teléfonos === */
-.products-container {
-  padding-left: 190px;      /* espacio para el panel izquierdo (ajusta si tu panel mide diferente) */
-  padding-top: 20px;
-  min-height: calc(100vh - 90px); /* evita que aparezca la pantalla blanca */
-  background: #f9f9f9;      /* o el color que ya usabas */
+/* ========================= ESTILOS BASE (fondo blanco) ========================= */
+:root {
+  --green: #25d366;
+  --muted: #efefef;
+  --accent: #007bff;
 }
 
-/* Corrección especial para móviles con notch */
-@supports (height: 100dvh) {
-  .products-container {
-    min-height: calc(100dvh - 90px);
-  }
-
+* {
+  box-sizing: border-box;
+  font-family: 'Montserrat', sans-serif;
 }
 
-  .category-btn { background:#fff; border:1px solid #ddd; padding:8px 12px; border-radius:30px; cursor:pointer; font-size:13px; text-align:left; }
-  .category-btn:hover { background:#f7f7f7; }
-  .category-btn.active { background: var(--green); color:#fff; border-color: #1aa64a; }
+body {
+  margin: 0;
+  padding: 0;
+  background: #fff;
+  color: #111;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+}
 
-  /* Productos grid */
-  .products { display:flex; flex-wrap:wrap; gap:18px; justify-content:center; align-items:flex-start; margin: 18px auto 100px; max-width:1200px; padding:12px; }
-  .product { background: var(--muted); width:225px; border-radius:10px; padding:10px; box-shadow:0 2px 8px rgba(0,0,0,0.06); text-align:center; }
-  .product img { width:100%; height:auto; max-height:150px; object-fit:contain; border-radius:8px; }
-  .product h4 { margin:8px 0 6px; font-size:15px; line-height:1.1; }
-  .product p { margin:0 0 8px; font-weight:700; color:#333; }
+/* Banner */
+.banner {
+  width: 100%;
+  display:flex;
+  justify-content:center;
+  margin:10px 0;
+}
 
-  .qty-control { display:flex; justify-content:center; align-items:center; gap:8px; margin-top:8px; }
-  .qty-control button { padding:8px 10px; border:none; border-radius:6px; background:#9b9f9c; color:#fff; cursor:pointer; font-size:15px; }
-  .qty-control button:hover { background:#1e7e34; }
-  .qty-control span { display:inline-block; width:36px; background:#fff; border-radius:6px; padding:6px 0; font-weight:700; text-align:center; }
+.banner-img {
+  width: 50%;
+  max-width: 800px;
+  border-radius: 12px;
+  object-fit: cover;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+}
 
-  /* Top/right panel: cart + send */
-  .top-panel { position: fixed; top: 12px; right: 12px; display:flex; align-items:center; gap:10px; z-index:10000; background:transparent; }
-  .cart { background:#fff; padding:8px 10px; border-radius:45px; box-shadow:0 2px 6px rgba(0,0,0,0.12); display:flex; gap:8px; align-items:center; }
-  #cart-count { background:red; color:#fff; border-radius:50%; padding:5px 8px; font-weight:700; font-size:13px; }
-  #cart-total { font-weight:700; color:#333; font-size:13px; }
-  #whatsapp-btn { background:var(--green); color:#fff; border:none; padding:12px 14px; border-radius:40px; cursor:pointer; font-weight:700; box-shadow:0 2px 6px rgba(0,0,0,0.12); }
+/* Controls (sucursal, entrega, buscador) */
+.controls {
+  max-width:1200px;
+  margin: 6px auto;
+  padding: 8px;
+  display:flex;
+  gap:12px;
+  align-items:center;
+  justify-content:center;
+  flex-wrap:wrap;
+}
 
-  /* Modal */
-  .modal-backdrop { position:fixed; inset:0; background:rgba(0,0,0,0.45); display:none; align-items:center; justify-content:center; z-index:20000; }
-  .modal-backdrop.show { display:flex; }
-  .modal { width:92%; max-width:640px; background:#fff; border-radius:12px; padding:18px; box-shadow:0 10px 30px rgba(0,0,0,0.25); transform:translateY(8px); opacity:0; transition:opacity .22s ease, transform .22s ease; }
-  .modal.show { opacity:1; transform:translateY(0); }
-  .modal h3 { margin:0 0 8px; color:#666; }
-  .modal .line { display:flex; justify-content:space-between; padding:8px 0; border-bottom:1px solid #eee; }
-  .modal .footer { display:flex; justify-content:flex-end; gap:10px; margin-top:12px; }
-  .btn-ghost { background:#efefef; border:none; padding:10px 14px; border-radius:8px; cursor:pointer; }
-  .btn-green { background:var(--green); color:#fff; border:none; padding:10px 14px; border-radius:8px; cursor:pointer; }
+.controls > div {
+  display:flex;
+  gap:6px;
+  align-items:center;
+}
 
-  /* Toast */
-  .toast { position: fixed; left:50%; transform:translateX(-50%); bottom:18px; background:rgba(0,0,0,0.86); color:#fff; padding:8px 12px; border-radius:8px; z-index:30000; }
+.controls label {
+  font-weight:500;
+}
 
-  /* Small adjustments */
-  @media (max-width: 1024px) {
-    .banner-img { width: 70%; }
+select, input[type="text"] {
+  padding:8px 10px;
+  border-radius:8px;
+  border:1px solid #ccc;
+  font-size:14px;
+}
+
+/* Info domicilio (oculto por defecto) */
+#info-domicilio {
+  display:none;
+  text-align:center;
+  margin: 8px auto;
+  max-width:360px;
+}
+
+#info-domicilio input {
+  width:90%;
+  padding:8px;
+  margin:6px auto;
+  border-radius:8px;
+  border:1px solid #ccc;
+  display:block;
+}
+
+/* Botón categorías */
+.categories-btn {
+  position: fixed;
+  top: 18px;
+  left: 18px;
+  z-index: 10010;
+  background:#fff;
+  border:1px solid #9f9f9f;
+  border-radius:60px;
+  padding:10px 18px;
+  cursor:pointer;
+  box-shadow:0 2px 6px rgba(0,0,0,0.12);
+  font-size:13px;
+}
+
+.categories-btn:hover {
+  background: #f3f3f3;
+}
+
+/* Lista de categorias (panel) */
+.category-list {
+  position: fixed;
+  top: 64px;
+  left: 18px;
+  z-index: 10005;
+  display:none;
+  flex-direction: column;
+  gap:8px;
+  background:#fff;
+  padding:10px;
+  border-radius:10px;
+  box-shadow:0 8px 26px rgba(0,0,0,0.12);
+  max-height: 60vh;
+  overflow:auto;
+  min-width:180px;
+}
+
+.category-btn {
+  background:#fff;
+  border:1px solid #ddd;
+  padding:8px 12px;
+  border-radius:30px;
+  cursor:pointer;
+  font-size:13px;
+  text-align:left;
+}
+
+.category-btn:hover {
+  background:#f7f7f7;
+}
+
+.category-btn.active {
+  background: var(--green);
+  color:#fff;
+  border-color: #1aa64a;
+}
+
+/* Productos grid */
+.products {
+  display:flex;
+  flex-wrap:wrap;
+  gap:18px;
+  justify-content:center;
+  align-items:flex-start;
+  margin: 18px auto 100px;
+  max-width:1200px;
+  padding:12px;
+}
+
+.product {
+  background: var(--muted);
+  width:225px;
+  border-radius:10px;
+  padding:10px;
+  box-shadow:0 2px 8px rgba(0,0,0,0.06);
+  text-align:center;
+}
+
+.product img {
+  width:100%;
+  height:auto;
+  max-height:150px;
+  object-fit:contain;
+  border-radius:8px;
+}
+
+.product h4 {
+  margin:8px 0 6px;
+  font-size:15px;
+  line-height:1.1;
+}
+
+.product p {
+  margin:0 0 8px;
+  font-weight:700;
+  color:#333;
+}
+
+.qty-control {
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:8px;
+  margin-top:8px;
+}
+
+.qty-control button {
+  padding:8px 10px;
+  border:none;
+  border-radius:6px;
+  background:#9b9f9c;
+  color:#fff;
+  cursor:pointer;
+  font-size:15px;
+}
+
+.qty-control button:hover {
+  background:#1e7e34;
+}
+
+.qty-control span {
+  display:inline-block;
+  width:36px;
+  background:#fff;
+  border-radius:6px;
+  padding:6px 0;
+  font-weight:700;
+  text-align:center;
+}
+
+/* Top/right panel: cart + send */
+.top-panel {
+  position: fixed;
+  top: 12px;
+  right: 12px;
+  display:flex;
+  align-items:center;
+  gap:10px;
+  z-index:10000;
+  background:transparent;
+}
+
+.cart {
+  background:#fff;
+  padding:8px 12px;
+  border-radius:45px;
+  box-shadow:0 2px 6px rgba(0,0,0,0.12);
+  display:flex;
+  gap:8px;
+  align-items:center;
+}
+
+#cart-count {
+  background:red;
+  color:#fff;
+  border-radius:50%;
+  padding:5px 8px;
+  font-weight:700;
+  font-size:13px;
+}
+
+#cart-total {
+  font-weight:700;
+  color:#333;
+  font-size:13px;
+}
+
+#whatsapp-btn {
+  background:var(--green);
+  color:#fff;
+  border:none;
+  padding:12px 14px;
+  border-radius:40px;
+  cursor:pointer;
+  font-weight:700;
+  box-shadow:0 2px 6px rgba(0,0,0,0.12);
+}
+
+/* Modal */
+.modal-backdrop {
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.45);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  z-index:20000;
+}
+
+.modal-backdrop.show {
+  display:flex;
+}
+
+.modal {
+  width:92%;
+  max-width:640px;
+  background:#fff;
+  border-radius:12px;
+  padding:18px;
+  box-shadow:0 10px 30px rgba(0,0,0,0.25);
+  transform:translateY(8px);
+  opacity:0;
+  transition:opacity .22s ease, transform .22s ease;
+}
+
+.modal.show {
+  opacity:1;
+  transform:translateY(0);
+}
+
+.modal h3 {
+  margin:0 0 8px;
+  color:#666;
+}
+
+.modal .line {
+  display:flex;
+  justify-content:space-between;
+  padding:8px 0;
+  border-bottom:1px solid #eee;
+}
+
+.modal .footer {
+  display:flex;
+  justify-content:flex-end;
+  gap:10px;
+  margin-top:12px;
+}
+
+.btn-ghost {
+  background:#efefef;
+  border:none;
+  padding:10px 14px;
+  border-radius:8px;
+  cursor:pointer;
+}
+
+.btn-green {
+  background:var(--green);
+  color:#fff;
+  border:none;
+  padding:10px 14px;
+  border-radius:8px;
+  cursor:pointer;
+}
+
+/* Toast */
+.toast {
+  position: fixed;
+  left:50%;
+  transform:translateX(-50%);
+  bottom:18px;
+  background:rgba(0,0,0,0.86);
+  color:#fff;
+  padding:8px 12px;
+  border-radius:8px;
+  z-index:30000;
+}
+
+/* Small adjustments */
+@media (max-width: 1024px) {
+  .banner-img {
+    width: 70%;
+  }
+}
+
+/* ========================= RESPONSIVE (celular primero) ========================= */
+@media (max-width: 768px) {
+  .banner-img { width: 90%; }
+
+  .category-list {
+    left: 12px;
+    top: 62px;
+    min-width: 160px;
+    max-height: 55vh;
   }
 
-  /* =========================
-     RESPONSIVE (celular primero)
-     ========================= */
-  @media (max-width: 768px) {
-    .banner-img { width: 90%; }
-    .category-list { left: 12px; top: 62px; min-width: 160px; max-height: 55vh; }
-    .products { gap: 12px; padding: 8px; }
-    .product { width: 48%; } /* two columns on mid-size phones */
-    .qty-control button { padding: 8px 8px; }
-    .categories-btn { left: 12px; top: 12px; padding: 8px 14px; }
-    #buscador { min-width: 180px; }
-    /* Make the top panel compact */
-    .top-panel { right: 8px; top: 8px; gap:8px; }
+  .products { gap: 12px; padding: 8px; }
+  .product { width: 48%; }
+  .qty-control button { padding: 8px 8px; }
+
+  .categories-btn {
+    left: 12px;
+    top: 12px;
+    padding: 8px 14px;
   }
 
-  @media (max-width: 480px) {
-    .banner-img { width: 100%; border-radius:10px; }
-    .controls { flex-direction: column; gap:8px; padding:10px; }
-    .product { width: 100%; } /* single column on small phones */
-    .product img { max-height: 180px; }
-    .qty-control button { padding: 10px 12px; font-size:16px; }
-    .qty-control span { width:44px; }
-    .category-list { position: static; display:flex; flex-direction:row; overflow-x:auto; gap:8px; padding:10px; margin:8px auto; max-width:calc(100% - 24px); border-radius:8px; }
-    .category-btn { flex:0 0 auto; white-space:nowrap; }
-    .modal { width: 96%; max-width:420px; padding:14px; }
-    #whatsapp-btn { padding:12px; font-size:15px; }
-    .top-panel { position: fixed; bottom: 8px; left: 8px; right: 8px; justify-content:space-between; background: #fff; padding: 10px; border-radius: 12px; box-shadow:0 6px 18px rgba(0,0,0,0.08); }
-    .cart { padding:8px 10px; }
+  #buscador { min-width: 180px; }
+
+  .top-panel {
+    right: 8px;
+    top: 8px;
+    gap:8px;
+  }
+}
+
+@media (max-width: 480px) {
+  .banner-img {
+    width: 100%;
+    border-radius:10px;
   }
 
-  @media (hover: none) and (pointer: coarse) {
-    /* Touch optimizations */
-    .category-btn, .categories-btn, .qty-control button, #whatsapp-btn { -webkit-tap-highlight-color: rgba(0,0,0,0.05); }
+  .controls {
+    flex-direction: column;
+    gap:8px;
+    padding:10px;
   }
 
+  .product { width: 100%; }
+  .product img { max-height: 180px; }
+
+  .qty-control button {
+    padding: 10px 12px;
+    font-size:16px;
+  }
+
+  .qty-control span { width:44px; }
+
+  .category-list {
+    position: static;
+    display:flex;
+    flex-direction:row;
+    overflow-x:auto;
+    gap:8px;
+    padding:10px;
+    margin:8px auto;
+    max-width:calc(100% - 24px);
+    border-radius:8px;
+  }
+
+  .category-btn {
+    flex:0 0 auto;
+    white-space:nowrap;
+  }
+
+  .modal {
+    width: 96%;
+    max-width:420px;
+    padding:14px;
+  }
+
+  #whatsapp-btn {
+    padding:12px;
+    font-size:15px;
+  }
+
+  .top-panel {
+    position: fixed;
+    bottom: 8px;
+    left: 8px;
+    right: 8px;
+    justify-content:space-between;
+    background: #fff;
+    padding: 10px;
+    border-radius: 12px;
+    box-shadow:0 6px 18px rgba(0,0,0,0.08);
+  }
+
+  .cart { padding:8px 10px; }
+}
+
+@media (hover: none) and (pointer: coarse) {
+  .category-btn,
+  .categories-btn,
+  .qty-control button,
+  #whatsapp-btn {
+    -webkit-tap-highlight-color: rgba(0,0,0,0.05);
+  }
+}
 </style>
 </head>
+
 <body>
 
-  <!-- Banner original -->
-  <div class="banner">
-    <img src="BIENVENIDO.png" alt="Banner Mini Super Toñita" class="banner-img">
+<!-- Banner original -->
+<div class="banner">
+  <img src="BIENVENIDO.png" alt="Banner Mini Super Toñita" class="banner-img">
+</div>
+
+<!-- Controles: sucursal, tipo de entrega y buscador -->
+<div class="controls" role="region" aria-label="Controles">
+  <div>
+    <label for="sucursal">Sucursal:</label>
+    <select id="sucursal" aria-label="Seleccionar sucursal">
+      <option value="Los Fuentes-Corinto">Los Fuentes-Corinto</option>
+      <option value="Corinto-Centro">Corinto-Centro</option>
+      <option value="Metapán-Santa Ana">Metapán-Santa Ana</option>
+    </select>
   </div>
 
-  <!-- Controles: sucursal, tipo de entrega y buscador -->
-  <div class="controls" role="region" aria-label="Controles">
-    <div>
-      <label for="sucursal">Sucursal:</label>
-      <select id="sucursal" aria-label="Seleccionar sucursal">
-        <option value="Los Fuentes-Corinto">Los Fuentes-Corinto</option>
-        <option value="Corinto-Centro">Corinto-Centro</option>
-        <option value="Metapán-Santa Ana">Metapán-Santa Ana</option>
-      </select>
+  <div class="entrega-box">
+    <label for="tipoEntrega">Tipo entrega:</label>
+    <select id="tipoEntrega" aria-label="Tipo de entrega">
+      <option value="Recoger en tienda">Recoger en tienda</option>
+      <option value="Domicilio">Domicilio</option>
+    </select>
+  </div>
+
+  <input type="text" id="buscador" placeholder="Buscar productos..." aria-label="Buscar productos">
+</div>
+
+<!-- Info domicilio (oculta) -->
+<div id="info-domicilio" aria-hidden="true">
+  <input id="cliente-nombre" type="text" placeholder="Nombre completo" aria-label="Nombre completo">
+  <input id="cliente-direccion" type="text" placeholder="Dirección exacta / referencia" aria-label="Dirección">
+  <input id="cliente-telefono" type="text" placeholder="Teléfono (ej. 7XXXXXXXX)" aria-label="Teléfono">
+</div>
+
+<!-- Botón categorias -->
+<button class="categories-btn" id="btn-categorias" aria-expanded="false" aria-controls="categories-container">
+  CATEGORÍAS
+</button>
+
+<!-- Contenedor categorias (panel o scroller según tamaño) -->
+<div id="categories-container" class="category-list" aria-hidden="true"></div>
+
+<!-- Productos -->
+<div id="products-container" class="products" role="list" aria-live="polite"></div>
+
+<!-- Panel superior: carrito + enviar -->
+<div class="top-panel" role="status" aria-label="Panel superior">
+  <div class="cart">
+    <span>🛒</span>
+    <span id="cart-count">0</span>
+    <span id="cart-total">$0.00</span>
+  </div>
+  <button id="whatsapp-btn">Enviar pedido</button>
+</div>
+
+<!-- Modal -->
+<div class="modal-backdrop" id="modal-backdrop" aria-hidden="true">
+  <div class="modal" id="modal-card" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <h3 id="modal-title">Confirmar pedido</h3>
+    <div id="modal-content" style="max-height:320px; overflow:auto; margin-top:8px;"></div>
+
+    <div class="footer">
+      <button class="btn-ghost" id="modal-back">Volver</button>
+      <button class="btn-green" id="modal-send">Enviar por WhatsApp</button>
     </div>
-
-    <div class="entrega-box">
-      <label for="tipoEntrega">Tipo entrega:</label>
-      <select id="tipoEntrega" aria-label="Tipo de entrega">
-        <option value="Recoger en tienda">Recoger en tienda</option>
-        <option value="Domicilio">Domicilio</option>
-      </select>
-    </div>
-
-    <input type="text" id="buscador" placeholder="Buscar productos..." aria-label="Buscar productos">
   </div>
-
-  <!-- Info domicilio (oculta) -->
-  <div id="info-domicilio" aria-hidden="true">
-    <input id="cliente-nombre" type="text" placeholder="Nombre completo" aria-label="Nombre completo">
-    <input id="cliente-direccion" type="text" placeholder="Dirección exacta / referencia" aria-label="Dirección">
-    <input id="cliente-telefono" type="text" placeholder="Teléfono (ej. 7XXXXXXXX)" aria-label="Teléfono">
-  </div>
-
-  <!-- Botón categorias -->
-  <button class="categories-btn" id="btn-categorias" aria-expanded="false" aria-controls="categories-container">CATEGORÍAS</button>
-
-  <!-- Contenedor categorias (panel o scroller según tamaño) -->
-  <div id="categories-container" class="category-list" aria-hidden="true"></div>
-
-  <!-- Productos -->
-  <div id="products-container" class="products" role="list" aria-live="polite"></div>
-
-  <!-- Panel superior: carrito + enviar (se adapta a bottom en móvil) -->
-  <div class="top-panel" role="status" aria-label="Panel superior">
-    <div class="cart" aria-hidden="false">
-      <span>🛒</span>
-      <span id="cart-count">0</span>
-      <span id="cart-total">$0.00</span>
-    </div>
-    <button id="whatsapp-btn">Enviar pedido</button>
-  </div>
-
-  <!-- Modal -->
-  <div class="modal-backdrop" id="modal-backdrop" aria-hidden="true">
-    <div class="modal" id="modal-card" role="dialog" aria-modal="true" aria-labelledby="modal-title">
-      <h3 id="modal-title">Confirmar pedido</h3>
-      <div id="modal-content" style="max-height:320px; overflow:auto; margin-top:8px;"></div>
-      <div class="footer">
-        <button class="btn-ghost" id="modal-back">Volver</button>
-        <button class="btn-green" id="modal-send">Enviar por WhatsApp</button>
-      </div>
-    </div>
-  </div>
+</div>
 
 <script>
-/* =========================
-   JS: datos, UI y comportamiento
-   ========================= */
-
+/* ========================= JS: datos, UI y comportamiento ========================= */
 document.addEventListener('DOMContentLoaded', () => {
-
   /* === Datos (productos y sucursales) === */
   const STORES = {
-    "Los Fuentes-Corinto": {
+ "Los Fuentes-Corinto": {
       "CANASTAS NAVIDEÑAS":[
         {id:'c1', name:'Canasta Básica', price:12.00, img:'img/canasta1.png',imag2:'imag/lista1.png'},
         {id:'c2', name:'Canasta Básica plus', price:15.00, img:'img/canasta1.png'},
