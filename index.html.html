@@ -37,11 +37,64 @@ body {
 }
 
 .banner-img {
-  width: 50%;
+  width: 80%;
   max-width: 800px;
   border-radius: 12px;
   object-fit: cover;
   box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+}
+.categories-btn {
+  position: static;       /* para que quede fijo en la pantalla */
+  top: 150px;            /* distancia desde la parte superior (ajustala) */
+  left: 50%;             /* posición horizontal al 50% del viewport */
+  transform: translateX(200%); /* mover exactamente al centro */
+  justify-content: center;
+  margin: -35px;
+  background:#fff;
+  border:1px solid #c7c5c5;
+  border-radius:10px;
+  padding:10px 12px;
+  cursor:pointer;
+  box-shadow:0 2px 6px rgba(0,0,0,0.12);
+  font-size:13px;
+  z-index: 20050;        /* asegurarse que quede por encima de otros elementos */
+}
+
+.category-list {
+  position: fixed;
+  top: 64px;
+  left: 18px;
+  z-index: 10005;
+  display:none;
+  flex-direction: column;
+  gap:8px;
+  background:#fff;
+  padding:10px;
+  border-radius:10px;
+  box-shadow:0 8px 26px rgba(0,0,0,0.12);
+  max-height: 60vh;
+  overflow:auto;
+  min-width:180px;
+}
+
+.category-btn {
+  background:#fff;
+  border:1px solid #ddd;
+  padding:8px 12px;
+  border-radius:30px;
+  cursor:pointer;
+  font-size:13px;
+  text-align:left;
+}
+
+.category-btn:hover {
+  background:#f7f7f7;
+}
+
+.category-btn.active {
+  background: var(--green);
+  color:#fff;
+  border-color: #1aa64a;
 }
 
 /* Controls (sucursal, entrega, buscador) */
@@ -90,62 +143,6 @@ select, input[type="text"] {
   display:block;
 }
 
-/* Botón categorías */
-.categories-btn {
-  position: absolute;
-  top: 18px;
-  left: 18px;
-  z-index: 10010;
-  background:#fff;
-  border:1px solid #9f9f9f;
-  border-radius:60px;
-  padding:10px 18px;
-  cursor:pointer;
-  box-shadow:0 2px 6px rgba(0,0,0,0.12);
-  font-size:13px;
-}
-
-.categories-btn:hover {
-  background: #f3f3f3;
-}
-
-/* Lista de categorias (panel) */
-.category-list {
-  position: fixed;
-  top: 64px;
-  left: 18px;
-  z-index: 10005;
-  display:none;
-  flex-direction: column;
-  gap:8px;
-  background:#fff;
-  padding:10px;
-  border-radius:10px;
-  box-shadow:0 8px 26px rgba(0,0,0,0.12);
-  max-height: 60vh;
-  overflow:auto;
-  min-width:180px;
-}
-
-.category-btn {
-  background:#fff;
-  border:1px solid #ddd;
-  padding:8px 12px;
-  border-radius:30px;
-  cursor:pointer;
-  font-size:13px;
-  text-align:left;
-}
-
-.category-btn:hover {
-  background:#f7f7f7;
-}
-
-.category-btn.active {
-  background: var(--green);
-  color:#fff;
-  border-color: #1aa64a;
-}
 
 /* Productos grid */
 .products {
@@ -156,7 +153,7 @@ select, input[type="text"] {
   align-items:flex-start;
   margin: 18px auto 100px;
   max-width:1200px;
-  padding:12px;
+  padding:30px;
 }
 
 .product {
@@ -220,7 +217,7 @@ select, input[type="text"] {
   text-align:center;
 }
 
-/* Top/right panel: cart + send */
+/* Panel superior */
 .top-panel {
   position: fixed;
   top: 12px;
@@ -349,116 +346,52 @@ select, input[type="text"] {
   z-index:30000;
 }
 
-/* Small adjustments */
-@media (max-width: 1024px) {
-  .banner-img {
-    width: 70%;
-  }
-}
-
-/* ========================= RESPONSIVE (celular primero) ========================= */
-@media (max-width: 768px) {
-  .banner-img { width: 90%; }
-
-  .products { gap: 12px; padding: 8px; }
-  .product { width: 48%; }
-  .qty-control button { padding: 8px 8px; }
-
-  .categories-btn {
-    left: 12px;
-    top: 12px;
-    padding: 8px 14px;
-  }
-
-  #buscador { min-width: 180px; }
-
-  .top-panel {
-    right: 8px;
-    top: 8px;
-    gap:8px;
-  }
-}
-
+/* ---------------------------------------------------------
+   📱 UBICACIÓN ESPECIAL PARA BOTONES EN FORMATO MOVIL (≤480px)
+   --------------------------------------------------------- */
 @media (max-width: 480px) {
-  .banner-img {
-    width: 100%;
-    border-radius:10px;
-  }
 
-  .controls {
-    flex-direction: column;
-    gap:8px;
-    padding:10px;
-  }
+  
+}
 
-  .product { width: 100%; }
-  .product img { max-height: 180px; }
 
-  .qty-control button {
-    padding: 10px 12px;
-    font-size:16px;
-  }
-
-  .qty-control span { width:44px; }
-
-  .category-list {
-    position: fixed;
-    top:60px;
-    left: 12px;
-    right: 12px;
-    display:flex;
-    flex-direction:row;
-    overflow-x:auto;
-    gap:8px;
-    padding:10px;
-    background: #fff;
-    border-radius:8px;
-    z-index: 9999;
-  }
-
-  .category-btn {
-    flex:0 0 auto;
-    white-space:nowrap;
-  }
-
-  .modal {
-    width: 96%;
-    max-width:420px;
-    padding:14px;
-  }
-
-  #whatsapp-btn {
-    padding:12px;
-    font-size:15px;
-  }
-
+  /* Panel superior (Carrito + Enviar pedido) — mover abajo derecha */
   .top-panel {
-    position: fixed;
-    bottom: 8px;
-    left: 8px;
-    right: 8px;
-    justify-content:space-between;
-    background: #fff;
-    padding: 10px;
-    border-radius: 12px;
-    box-shadow:0 6px 18px rgba(0,0,0,0.08);
+    position: fixed !important;
+    top: auto !important;
+    bottom: 16px !important;
+    right: 16px !important;
+    left: auto !important;
+    background: #ffffff;
+    padding: 10px 14px;
+    border-radius: 14px;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.15);
+    z-index: 20000 !important;
   }
 
-  .cart { padding:8px 10px; }
-}
+  .cart {
+    padding: 8px 10px;
+  }
 
-@media (hover: none) and (pointer: coarse) {
-  .category-btn,
-  .categories-btn,
-  .qty-control button,
   #whatsapp-btn {
-    -webkit-tap-highlight-color: rgba(0,0,0,0.05);
+    padding: 10px 12px;
+    font-size: 14px;
+
   }
-}
+.categories-btn {
+   background: #ffffff;
+    position: center;
+  }
+  /* Lista de categorías — aparece arriba bien ubicada */
+ /* Botón en TELÉFONO */
+
+
+
 </style>
 </head>
 
 <body>
+  
 
 <!-- Banner original -->
 <div class="banner">
